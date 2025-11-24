@@ -1,8 +1,17 @@
-#include "spdlog/spdlog.h"
+#include <cstdlib>
+#include "window.hpp"
 
 int main()
 {
-    spdlog::info("Hello world!");
+    Window window{ "Cube", 1280, 720 };
+    if (!window)
+        return EXIT_FAILURE;
 
-    return 0;
+    while (!window.shouldClose())
+    {
+        window.beginFrame();
+        window.endFrame();
+    }
+
+    return EXIT_SUCCESS;
 }

@@ -35,11 +35,17 @@ add_subdirectory(deps/spdlog)
 # cube
 
 set(CUBE_SOURCES_PATH src)
+set(CUBE_HEADERS_PATH include)
 
 set(CUBE_SOURCES
-    ${CUBE_SOURCES_PATH}/main.cpp)
+    ${CUBE_SOURCES_PATH}/main.cpp
+    ${CUBE_SOURCES_PATH}/window.cpp)
+set(CUBE_HEADERS
+    ${CUBE_HEADERS_PATH}/utils/noncopyable.hpp
+    ${CUBE_HEADERS_PATH}/window.hpp)
 
-add_executable(cube ${CUBE_SOURCES})
+add_executable(cube ${CUBE_SOURCES} ${CUBE_HEADERS})
+target_include_directories(cube PRIVATE ${CUBE_HEADERS_PATH})
 target_link_libraries(cube PRIVATE
     glad
     glfw
