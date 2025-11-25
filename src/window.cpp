@@ -9,10 +9,9 @@ Window::Window(const std::string& title, int width, int height)
 {
     spdlog::info("Creating window '{}' ({}x{})", title, width, height);
 
-    glfwSetErrorCallback([] (int, const char* description)
-        {
-            spdlog::error("GLFW error: {}", description);
-        });
+    glfwSetErrorCallback([](int, const char* description) {
+        spdlog::error("GLFW error: {}", description);
+    });
 
     if (!glfwInit())
         goto error_init;

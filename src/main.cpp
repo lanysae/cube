@@ -7,8 +7,7 @@ int main()
     if (!window)
         return EXIT_FAILURE;
 
-    while (!window.shouldClose())
-    {
+    while (!window.shouldClose()) {
         window.beginFrame();
         window.endFrame();
     }
