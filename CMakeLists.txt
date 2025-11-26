@@ -64,3 +64,8 @@ else()
         target_compile_options(cube PRIVATE -fansi-escape-codes)
     endif()
 endif()
+
+if (WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    target_compile_options(cube PRIVATE $<$<CONFIG:Debug,RelWithDebInfo>:-gcodeview>)
+    target_link_options(cube PRIVATE $<$<CONFIG:Debug,RelWithDebInfo>:-fuse-ld=lld;-Wl,/debug>)
+endif()
