@@ -4,9 +4,12 @@
 #include <GLFW/glfw3.h>
 #include <glad/gl.h>
 #include <spdlog/spdlog.h>
+#include "utils/assertion.hpp"
 
 Window::Window(const std::string& title, int width, int height)
 {
+    Assert(width > 0 && height > 0);
+
     spdlog::info("Creating window '{}' ({}x{})", title, width, height);
 
     glfwSetErrorCallback([](int, const char* description) {

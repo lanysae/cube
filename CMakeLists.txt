@@ -41,6 +41,7 @@ set(CUBE_SOURCES
     ${CUBE_SOURCES_PATH}/main.cpp
     ${CUBE_SOURCES_PATH}/window.cpp)
 set(CUBE_HEADERS
+    ${CUBE_HEADERS_PATH}/utils/assertion.hpp
     ${CUBE_HEADERS_PATH}/utils/noncopyable.hpp
     ${CUBE_HEADERS_PATH}/window.hpp)
 
