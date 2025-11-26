@@ -6,3 +6,7 @@
 	path = deps/spdlog
 	url = https://github.com/gabime/spdlog.git
 	shallow = true
+[submodule "deps/imgui"]
+	path = deps/imgui
+	url = https://github.com/ocornut/imgui.git
+	shallow = true

@@ -2,7 +2,10 @@
 #include <string>
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
 #include <glad/gl.h>
+#include <imgui.h>
 #include <spdlog/spdlog.h>
 #include "utils/assertion.hpp"
 
@@ -34,6 +37,11 @@ Window::Window(const std::string& title, int width, int height)
         goto error_glad;
     }
 
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init();
+
     return;
 
 error_glad:
@@ -49,6 +57,10 @@ Window::~Window()
     if (!window)
         return;
 
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
+
     glfwDestroyWindow(window);
     glfwTerminate();
 }
@@ -62,6 +74,10 @@ void Window::beginFrame()
 {
     glfwPollEvents();
 
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+
     int width, height;
     glfwGetFramebufferSize(window, &width, &height);
     glViewport(0, 0, width, height);
@@ -71,5 +87,8 @@ void Window::beginFrame()
 
 void Window::endFrame()
 {
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
     glfwSwapBuffers(window);
 }

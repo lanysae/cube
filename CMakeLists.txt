@@ -28,6 +28,34 @@ set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
 
 add_subdirectory(deps/glfw)
 
+# ImGui
+
+set(IMGUI_SOURCES_PATH deps/imgui)
+set(IMGUI_HEADERS_PATH deps/imgui)
+
+set(IMGUI_SOURCES
+    ${IMGUI_SOURCES_PATH}/imgui.cpp
+    ${IMGUI_SOURCES_PATH}/imgui_demo.cpp
+    ${IMGUI_SOURCES_PATH}/imgui_draw.cpp
+    ${IMGUI_SOURCES_PATH}/imgui_tables.cpp
+    ${IMGUI_SOURCES_PATH}/imgui_widgets.cpp
+    ${IMGUI_SOURCES_PATH}/backends/imgui_impl_glfw.cpp
+    ${IMGUI_SOURCES_PATH}/backends/imgui_impl_opengl3.cpp)
+set(IMGUI_HEADERS
+    ${IMGUI_HEADERS_PATH}/imconfig.h
+    ${IMGUI_HEADERS_PATH}/imgui.h
+    ${IMGUI_HEADERS_PATH}/imgui_internal.h
+    ${IMGUI_HEADERS_PATH}/imstb_rectpack.h
+    ${IMGUI_HEADERS_PATH}/imstb_textedit.h
+    ${IMGUI_HEADERS_PATH}/imstb_truetype.h
+    ${IMGUI_HEADERS_PATH}/backends/imgui_impl_glfw.h
+    ${IMGUI_HEADERS_PATH}/backends/imgui_impl_opengl3.h
+    ${IMGUI_HEADERS_PATH}/backends/imgui_impl_opengl3_loader.h)
+
+add_library(ImGui STATIC ${IMGUI_SOURCES} ${IMGUI_HEADERS})
+target_include_directories(ImGui PUBLIC ${IMGUI_HEADERS_PATH})
+target_link_libraries(ImGui PRIVATE glfw)
+
 # spdlog
 
 add_subdirectory(deps/spdlog)
@@ -50,6 +78,7 @@ target_include_directories(cube PRIVATE ${CUBE_HEADERS_PATH})
 target_link_libraries(cube PRIVATE
     glad
     glfw
+    ImGui
     spdlog)
 
 if (MSVC)

@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <imgui.h>
 #include "window.hpp"
 
 int main()
@@ -9,6 +10,9 @@ int main()
 
     while (!window.shouldClose()) {
         window.beginFrame();
+
+        ImGui::ShowDemoWindow();
+
         window.endFrame();
     }
 
