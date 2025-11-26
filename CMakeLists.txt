@@ -51,5 +51,16 @@ target_link_libraries(cube PRIVATE
     glfw
     spdlog)
 
-target_compile_options(cube PRIVATE -Wall -Wextra -pedantic)
-target_compile_options(cube PRIVATE -fdiagnostics-color -fansi-escape-codes)
+if (MSVC)
+    target_compile_options(cube PRIVATE /W4)
+else()
+    target_compile_options(cube PRIVATE -Wall -Wextra -pedantic)
+
+    if (CMAKE_GENERATOR STREQUAL "Ninja")
+        target_compile_options(cube PRIVATE -fdiagnostics-color)
+    endif()
+
+    if (WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+        target_compile_options(cube PRIVATE -fansi-escape-codes)
+    endif()
+endif()

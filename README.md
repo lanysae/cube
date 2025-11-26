@@ -2,11 +2,13 @@
 
 ## Building
 
+On Unix-like systems, you will need a few extra packages for compiling GLFW: [Installing dependencies](https://www.glfw.org/docs/latest/compile_guide.html#compile_deps).
+
 ```bash
 $ cmake --workflow --preset release
 ```
 
-You can use the `debug` preset to make a debug build.
+You can use the `debug` preset to make a debug build. If Ninja and Clang are not available, use `default-release` or the `default-debug` preset.
 
 ## Code formatting
 

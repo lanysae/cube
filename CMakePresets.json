@@ -4,25 +4,38 @@
         {
             "name": "default",
             "hidden": true,
-            "generator": "Ninja",
-            "binaryDir": "${sourceDir}/build/${presetName}",
-            "cacheVariables": {
-                "CMAKE_C_COMPILER": "clang",
-                "CMAKE_CXX_COMPILER": "clang++"
-            }
+            "binaryDir": "${sourceDir}/build/${presetName}"
         },
         {
-            "name": "debug",
+            "name": "default-debug",
             "inherits": "default",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug"
             }
         },
         {
-            "name": "release",
+            "name": "debug",
+            "inherits": "default-debug",
+            "generator": "Ninja",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "clang",
+                "CMAKE_CXX_COMPILER": "clang++"
+            }
+        },
+        {
+            "name": "default-release",
             "inherits": "default",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "release",
+            "inherits": "default-release",
+            "generator": "Ninja",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "clang",
+                "CMAKE_CXX_COMPILER": "clang++"
             }
         }
     ],
@@ -32,17 +45,42 @@
             "hidden": true
         },
         {
-            "name": "debug",
+            "name": "default-debug",
             "inherits": "default",
+            "configurePreset": "default-debug",
+            "configuration": "Debug"
+        },
+        {
+            "name": "debug",
+            "inherits": "default-debug",
             "configurePreset": "debug"
         },
         {
-            "name": "release",
+            "name": "default-release",
             "inherits": "default",
+            "configurePreset": "default-release",
+            "configuration": "Release"
+        },
+        {
+            "name": "release",
+            "inherits": "default-release",
             "configurePreset": "release"
         }
     ],
     "workflowPresets": [
+        {
+            "name": "default-debug",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "default-debug"
+                },
+                {
+                    "type": "build",
+                    "name": "default-debug"
+                }
+            ]
+        },
         {
             "name": "debug",
             "steps": [
@@ -53,6 +91,19 @@
                 {
                     "type": "build",
                     "name": "debug"
+                }
+            ]
+        },
+        {
+            "name": "default-release",
+            "steps": [
+                {
+                    "type": "configure",
+                    "name": "default-release"
+                },
+                {
+                    "type": "build",
+                    "name": "default-release"
                 }
             ]
         },
