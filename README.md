@@ -2,8 +2,19 @@
 
 ## Building
 
+Clone the repository with all its dependencies:
+```bash
+$ git clone --recursive https://github.com/lanysae/cube.git
+```
+
+If you accidentally cloned without the `--recursive` flag, or want to update after a new submodule has been added, run:
+```bash
+$ git submodule update --init --recursive
+```
+
 On Unix-like systems, you will need a few extra packages for compiling GLFW: [Installing dependencies](https://www.glfw.org/docs/latest/compile_guide.html#compile_deps).
 
+Finally, run CMake from inside the cube root directory:
 ```bash
 $ cmake --workflow --preset release
 ```
