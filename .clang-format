@@ -140,7 +140,7 @@ ForEachMacros: []
 IfMacros: []
 IncludeBlocks: Preserve
 IncludeCategories:
-    - Regex: '^<(GLFW|backends|glad|imgui|spdlog)'
+    - Regex: '^<(GLFW|backends|glad|imgui|spdlog|stb)'
       Priority: 2
       SortPriority: 0
       CaseSensitive: false

@@ -60,6 +60,16 @@ target_link_libraries(ImGui PRIVATE glfw)
 
 add_subdirectory(deps/spdlog)
 
+# stb
+
+set(STB_HEADERS_PATH deps/stb)
+
+set(STB_HEADERS
+    ${STB_HEADERS_PATH}/stb_include.h)
+
+add_library(stb INTERFACE ${STB_HEADERS})
+target_include_directories(stb INTERFACE ${STB_HEADERS_PATH})
+
 # cube
 
 set(CUBE_SOURCES_PATH src)
@@ -79,7 +89,8 @@ target_link_libraries(cube PRIVATE
     glad
     glfw
     ImGui
-    spdlog)
+    spdlog
+    stb)
 
 if (MSVC)
     target_compile_options(cube PRIVATE /W4)
