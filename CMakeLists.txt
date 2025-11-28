@@ -91,7 +91,7 @@ target_link_libraries(cube PRIVATE
     glad
     glfw
     ImGui
-    spdlog
+    spdlog::spdlog
     stb)
 
 if (MSVC)
