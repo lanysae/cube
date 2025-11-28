@@ -9,6 +9,20 @@
 #include <spdlog/spdlog.h>
 #include "utils/assertion.hpp"
 
+#ifndef NDEBUG
+static void GLAPIENTRY debugMessageCallback(GLenum, GLenum type, GLuint, GLenum severity, GLsizei, const GLchar* message, const void*)
+{
+    if (severity == GL_DEBUG_SEVERITY_HIGH
+        || severity == GL_DEBUG_SEVERITY_MEDIUM
+        || severity == GL_DEBUG_SEVERITY_LOW) {
+        if (type == GL_DEBUG_TYPE_ERROR)
+            spdlog::error("{}", message);
+        else
+            spdlog::warn("{}", message);
+    }
+}
+#endif
+
 Window::Window(const std::string& title, int width, int height)
 {
     Assert(width > 0 && height > 0);
@@ -24,6 +38,9 @@ Window::Window(const std::string& title, int width, int height)
 
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+#ifndef NDEBUG
+    glfwWindowHint(GLFW_CONTEXT_DEBUG, GLFW_TRUE);
+#endif
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
@@ -36,6 +53,11 @@ Window::Window(const std::string& title, int width, int height)
         spdlog::error("Unable to load OpenGL");
         goto error_glad;
     }
+
+#ifndef NDEBUG
+    glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+    glDebugMessageCallback(debugMessageCallback, nullptr);
+#endif
 
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
