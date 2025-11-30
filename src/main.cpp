@@ -2,8 +2,6 @@
 #include <cstdlib>
 #include <ratio>
 #include <thread>
-#define GLFW_INCLUDE_NONE
-#include <GLFW/glfw3.h>
 #include <imgui.h>
 #include "math/math.hpp"
 #include "math/matrix.hpp"
@@ -16,17 +14,24 @@ using FrameTime = std::chrono::duration<int, std::ratio<1, 30>>;
 
 void render(const Vector2i& size, Shader& shader, const Mesh& mesh)
 {
-    ImGui::ShowDemoWindow();
+    static float fovY = 50;
+    ImGui::SliderFloat("fovY", &fovY, 5, 175);
 
-    const float fovY = degToRad(50);
+    static float zNear = 0.125f;
+    static float zFar = 64;
+    ImGui::DragFloatRange2("zNear <-> zFar", &zNear, &zFar, 0.125f, 0.01f, 100);
+
     const float aspect = size.x / static_cast<float>(size.y);
-    const float zNear = 0.125f;
-    const float zFar = 1024;
-    shader.setUniform("projection", Matrix4f::perspective(fovY, aspect, zNear, zFar));
+    shader.setUniform("projection", Matrix4f::perspective(degToRad(fovY), aspect, zNear, zFar));
 
-    const float angle = degToRad(90) * glfwGetTime();
+    static float degPerSecond = 90;
+    ImGui::SliderFloat("degPerSecond", &degPerSecond, 0, 360);
+    static float angle = 0;
+    angle += degToRad(degPerSecond) * (1.f / 30);
+
     const Vector3f position{ 0, 0, -5 };
-    shader.setUniform("model", Matrix4f::translate(position) * Matrix4f::rotateY(angle));
+    const Vector3f axis{ 1, 2, 1 };
+    shader.setUniform("model", Matrix4f::translate(position) * Matrix4f::rotate(axis, angle));
 
     shader.bind();
     mesh.draw();
