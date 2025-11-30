@@ -7,6 +7,7 @@
 #include <glad/gl.h>
 #include <imgui.h>
 #include <spdlog/spdlog.h>
+#include "math/vector.hpp"
 #include "utils/assertion.hpp"
 
 #ifndef NDEBUG
@@ -23,11 +24,11 @@ static void GLAPIENTRY debugMessageCallback(GLenum, GLenum type, GLuint, GLenum 
 }
 #endif
 
-Window::Window(const std::string& title, int width, int height)
+Window::Window(const std::string& title, const Vector2i& size)
 {
-    Assert(width > 0 && height > 0);
+    Assert(size.x > 0 && size.y > 0);
 
-    spdlog::info("Creating window '{}' ({}x{})", title, width, height);
+    spdlog::info("Creating window '{}' ({}x{})", title, size.x, size.y);
 
     glfwSetErrorCallback([](int, const char* description) {
         spdlog::error("GLFW error: {}", description);
@@ -44,7 +45,7 @@ Window::Window(const std::string& title, int width, int height)
 #endif
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
+    window = glfwCreateWindow(size.x, size.y, title.c_str(), nullptr, nullptr);
     if (!window)
         goto error_window;
 
@@ -93,6 +94,14 @@ bool Window::shouldClose() const
     return glfwWindowShouldClose(window);
 }
 
+Vector2i Window::getSize() const
+{
+    int width, height;
+    glfwGetFramebufferSize(window, &width, &height);
+
+    return Vector2i{ width, height };
+}
+
 void Window::beginFrame()
 {
     glfwPollEvents();
@@ -101,9 +110,8 @@ void Window::beginFrame()
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
-    int width, height;
-    glfwGetFramebufferSize(window, &width, &height);
-    glViewport(0, 0, width, height);
+    const Vector2i size = getSize();
+    glViewport(0, 0, size.x, size.y);
 
     glClear(GL_COLOR_BUFFER_BIT);
 }

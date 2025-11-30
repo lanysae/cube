@@ -86,6 +86,24 @@ Matrix4f Matrix4f::rotate(const Vector3f& axis, float angle)
     };
 }
 
+Matrix4f Matrix4f::frustum(float left, float right, float bottom, float top, float zNear, float zFar)
+{
+    return Matrix4f{
+        2 * zNear / (right - left), 0, 0, 0,
+        0, 2 * zNear / (top - bottom), 0, 0,
+        (right + left) / (right - left), (top + bottom) / (top - bottom), -(zFar + zNear) / (zFar - zNear), -1,
+        0, 0, -2 * zFar * zNear / (zFar - zNear), 0
+    };
+}
+
+Matrix4f Matrix4f::perspective(float fovY, float aspect, float zNear, float zFar)
+{
+    const float top = zNear * std::tan(0.5f * fovY);
+    const float right = aspect * top;
+
+    return frustum(-right, right, -top, top, zNear, zFar);
+}
+
 Matrix4f operator*(const Matrix4f& lhs, const Matrix4f& rhs)
 {
     Matrix4f result;

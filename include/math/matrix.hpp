@@ -42,6 +42,8 @@ public:
     static Matrix4f rotateY(float angle);
     static Matrix4f rotateZ(float angle);
     static Matrix4f rotate(const Vector3f& axis, float angle);
+    static Matrix4f frustum(float left, float right, float bottom, float top, float zNear, float zFar);
+    static Matrix4f perspective(float fovY, float aspect, float zNear, float zFar);
 };
 
 Matrix4f operator*(const Matrix4f& lhs, const Matrix4f& rhs);
