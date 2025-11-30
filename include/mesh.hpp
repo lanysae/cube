@@ -11,6 +11,7 @@ public:
     struct Vertex {
         Vector3f position;
         Vector3f color;
+        Vector2f texCoords;
     };
 
     Mesh(std::span<const Vertex> vertices, std::span<const unsigned int> indices);

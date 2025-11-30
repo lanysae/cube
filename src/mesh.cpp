@@ -20,6 +20,10 @@ Mesh::Mesh(std::span<const Vertex> vertices, std::span<const unsigned int> indic
     glVertexArrayAttribFormat(vertexArray, 1, 3, GL_FLOAT, GL_FALSE, offsetof(Vertex, color));
     glVertexArrayAttribBinding(vertexArray, 1, 0);
 
+    glEnableVertexArrayAttrib(vertexArray, 2);
+    glVertexArrayAttribFormat(vertexArray, 2, 2, GL_FLOAT, GL_FALSE, offsetof(Vertex, texCoords));
+    glVertexArrayAttribBinding(vertexArray, 2, 0);
+
     glCreateBuffers(1, &indexBuffer);
     glNamedBufferStorage(indexBuffer, indices.size_bytes(), indices.data(), 0);
     glVertexArrayElementBuffer(vertexArray, indexBuffer);

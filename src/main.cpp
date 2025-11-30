@@ -50,35 +50,35 @@ int main()
 
     const Mesh::Vertex vertices[] = {
         // Front
-        { .position = Vector3f{ -1, -1, 1 }, .color = Vector3f{ 1, 0, 0 } },
-        { .position = Vector3f{ 1, -1, 1 }, .color = Vector3f{ 1, 0, 0 } },
-        { .position = Vector3f{ 1, 1, 1 }, .color = Vector3f{ 1, 0, 0 } },
-        { .position = Vector3f{ -1, 1, 1 }, .color = Vector3f{ 1, 0, 0 } },
+        { .position = Vector3f{ -1, -1, 1 }, .color = Vector3f{ 1, 0, 0 }, .texCoords = Vector2f{ 0, 0 } },
+        { .position = Vector3f{ 1, -1, 1 }, .color = Vector3f{ 1, 0, 0 }, .texCoords = Vector2f{ 1, 0 } },
+        { .position = Vector3f{ 1, 1, 1 }, .color = Vector3f{ 1, 0, 0 }, .texCoords = Vector2f{ 1, 1 } },
+        { .position = Vector3f{ -1, 1, 1 }, .color = Vector3f{ 1, 0, 0 }, .texCoords = Vector2f{ 0, 1 } },
         // Right
-        { .position = Vector3f{ 1, -1, 1 }, .color = Vector3f{ 0, 1, 0 } },
-        { .position = Vector3f{ 1, -1, -1 }, .color = Vector3f{ 0, 1, 0 } },
-        { .position = Vector3f{ 1, 1, -1 }, .color = Vector3f{ 0, 1, 0 } },
-        { .position = Vector3f{ 1, 1, 1 }, .color = Vector3f{ 0, 1, 0 } },
+        { .position = Vector3f{ 1, -1, 1 }, .color = Vector3f{ 0, 1, 0 }, .texCoords = Vector2f{ 0, 0 } },
+        { .position = Vector3f{ 1, -1, -1 }, .color = Vector3f{ 0, 1, 0 }, .texCoords = Vector2f{ 1, 0 } },
+        { .position = Vector3f{ 1, 1, -1 }, .color = Vector3f{ 0, 1, 0 }, .texCoords = Vector2f{ 1, 1 } },
+        { .position = Vector3f{ 1, 1, 1 }, .color = Vector3f{ 0, 1, 0 }, .texCoords = Vector2f{ 0, 1 } },
         // Back
-        { .position = Vector3f{ 1, -1, -1 }, .color = Vector3f{ 0, 0, 1 } },
-        { .position = Vector3f{ -1, -1, -1 }, .color = Vector3f{ 0, 0, 1 } },
-        { .position = Vector3f{ -1, 1, -1 }, .color = Vector3f{ 0, 0, 1 } },
-        { .position = Vector3f{ 1, 1, -1 }, .color = Vector3f{ 0, 0, 1 } },
+        { .position = Vector3f{ 1, -1, -1 }, .color = Vector3f{ 0, 0, 1 }, .texCoords = Vector2f{ 0, 0 } },
+        { .position = Vector3f{ -1, -1, -1 }, .color = Vector3f{ 0, 0, 1 }, .texCoords = Vector2f{ 1, 0 } },
+        { .position = Vector3f{ -1, 1, -1 }, .color = Vector3f{ 0, 0, 1 }, .texCoords = Vector2f{ 1, 1 } },
+        { .position = Vector3f{ 1, 1, -1 }, .color = Vector3f{ 0, 0, 1 }, .texCoords = Vector2f{ 0, 1 } },
         // Left
-        { .position = Vector3f{ -1, -1, -1 }, .color = Vector3f{ 0, 1, 1 } },
-        { .position = Vector3f{ -1, -1, 1 }, .color = Vector3f{ 0, 1, 1 } },
-        { .position = Vector3f{ -1, 1, 1 }, .color = Vector3f{ 0, 1, 1 } },
-        { .position = Vector3f{ -1, 1, -1 }, .color = Vector3f{ 0, 1, 1 } },
+        { .position = Vector3f{ -1, -1, -1 }, .color = Vector3f{ 0, 1, 1 }, .texCoords = Vector2f{ 0, 0 } },
+        { .position = Vector3f{ -1, -1, 1 }, .color = Vector3f{ 0, 1, 1 }, .texCoords = Vector2f{ 1, 0 } },
+        { .position = Vector3f{ -1, 1, 1 }, .color = Vector3f{ 0, 1, 1 }, .texCoords = Vector2f{ 1, 1 } },
+        { .position = Vector3f{ -1, 1, -1 }, .color = Vector3f{ 0, 1, 1 }, .texCoords = Vector2f{ 0, 1 } },
         // Top
-        { .position = Vector3f{ -1, 1, 1 }, .color = Vector3f{ 1, 1, 0 } },
-        { .position = Vector3f{ 1, 1, 1 }, .color = Vector3f{ 1, 1, 0 } },
-        { .position = Vector3f{ 1, 1, -1 }, .color = Vector3f{ 1, 1, 0 } },
-        { .position = Vector3f{ -1, 1, -1 }, .color = Vector3f{ 1, 1, 0 } },
+        { .position = Vector3f{ -1, 1, 1 }, .color = Vector3f{ 1, 1, 0 }, .texCoords = Vector2f{ 0, 0 } },
+        { .position = Vector3f{ 1, 1, 1 }, .color = Vector3f{ 1, 1, 0 }, .texCoords = Vector2f{ 1, 0 } },
+        { .position = Vector3f{ 1, 1, -1 }, .color = Vector3f{ 1, 1, 0 }, .texCoords = Vector2f{ 1, 1 } },
+        { .position = Vector3f{ -1, 1, -1 }, .color = Vector3f{ 1, 1, 0 }, .texCoords = Vector2f{ 0, 1 } },
         // Bottom
-        { .position = Vector3f{ -1, -1, -1 }, .color = Vector3f{ 1, 0, 1 } },
-        { .position = Vector3f{ 1, -1, -1 }, .color = Vector3f{ 1, 0, 1 } },
-        { .position = Vector3f{ 1, -1, 1 }, .color = Vector3f{ 1, 0, 1 } },
-        { .position = Vector3f{ -1, -1, 1 }, .color = Vector3f{ 1, 0, 1 } }
+        { .position = Vector3f{ -1, -1, -1 }, .color = Vector3f{ 1, 0, 1 }, .texCoords = Vector2f{ 0, 0 } },
+        { .position = Vector3f{ 1, -1, -1 }, .color = Vector3f{ 1, 0, 1 }, .texCoords = Vector2f{ 1, 0 } },
+        { .position = Vector3f{ 1, -1, 1 }, .color = Vector3f{ 1, 0, 1 }, .texCoords = Vector2f{ 1, 1 } },
+        { .position = Vector3f{ -1, -1, 1 }, .color = Vector3f{ 1, 0, 1 }, .texCoords = Vector2f{ 0, 1 } }
     };
 
     const unsigned int indices[] = {
