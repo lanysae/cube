@@ -61,6 +61,9 @@ Window::Window(const std::string& title, const Vector2i& size)
     glDebugMessageCallback(debugMessageCallback, nullptr);
 #endif
 
+    glEnable(GL_CULL_FACE);
+    glEnable(GL_DEPTH_TEST);
+
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGui_ImplGlfw_InitForOpenGL(window, true);
@@ -113,7 +116,7 @@ void Window::beginFrame()
     const Vector2i size = getSize();
     glViewport(0, 0, size.x, size.y);
 
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void Window::endFrame()

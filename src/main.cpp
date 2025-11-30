@@ -25,7 +25,7 @@ void render(const Vector2i& size, Shader& shader, const Mesh& mesh)
     shader.setUniform("projection", Matrix4f::perspective(fovY, aspect, zNear, zFar));
 
     const float angle = degToRad(90) * glfwGetTime();
-    const Vector3f position{ 0, 0, -2.5f };
+    const Vector3f position{ 0, 0, -5 };
     shader.setUniform("model", Matrix4f::translate(position) * Matrix4f::rotateY(angle));
 
     shader.bind();
@@ -44,12 +44,52 @@ int main()
         return EXIT_FAILURE;
 
     const Mesh::Vertex vertices[] = {
-        { .position = Vector3f{ -0.5f, -0.25f, 0 }, .color = Vector3f{ 1, 0, 0 } },
-        { .position = Vector3f{ 0.5f, -0.25f, 0 }, .color = Vector3f{ 0, 1, 0 } },
-        { .position = Vector3f{ 0.0f, 0.5f, 0 }, .color = Vector3f{ 0, 0, 1 } }
+        // Front
+        { .position = Vector3f{ -1, -1, 1 }, .color = Vector3f{ 1, 0, 0 } },
+        { .position = Vector3f{ 1, -1, 1 }, .color = Vector3f{ 1, 0, 0 } },
+        { .position = Vector3f{ 1, 1, 1 }, .color = Vector3f{ 1, 0, 0 } },
+        { .position = Vector3f{ -1, 1, 1 }, .color = Vector3f{ 1, 0, 0 } },
+        // Right
+        { .position = Vector3f{ 1, -1, 1 }, .color = Vector3f{ 0, 1, 0 } },
+        { .position = Vector3f{ 1, -1, -1 }, .color = Vector3f{ 0, 1, 0 } },
+        { .position = Vector3f{ 1, 1, -1 }, .color = Vector3f{ 0, 1, 0 } },
+        { .position = Vector3f{ 1, 1, 1 }, .color = Vector3f{ 0, 1, 0 } },
+        // Back
+        { .position = Vector3f{ 1, -1, -1 }, .color = Vector3f{ 0, 0, 1 } },
+        { .position = Vector3f{ -1, -1, -1 }, .color = Vector3f{ 0, 0, 1 } },
+        { .position = Vector3f{ -1, 1, -1 }, .color = Vector3f{ 0, 0, 1 } },
+        { .position = Vector3f{ 1, 1, -1 }, .color = Vector3f{ 0, 0, 1 } },
+        // Left
+        { .position = Vector3f{ -1, -1, -1 }, .color = Vector3f{ 0, 1, 1 } },
+        { .position = Vector3f{ -1, -1, 1 }, .color = Vector3f{ 0, 1, 1 } },
+        { .position = Vector3f{ -1, 1, 1 }, .color = Vector3f{ 0, 1, 1 } },
+        { .position = Vector3f{ -1, 1, -1 }, .color = Vector3f{ 0, 1, 1 } },
+        // Top
+        { .position = Vector3f{ -1, 1, 1 }, .color = Vector3f{ 1, 1, 0 } },
+        { .position = Vector3f{ 1, 1, 1 }, .color = Vector3f{ 1, 1, 0 } },
+        { .position = Vector3f{ 1, 1, -1 }, .color = Vector3f{ 1, 1, 0 } },
+        { .position = Vector3f{ -1, 1, -1 }, .color = Vector3f{ 1, 1, 0 } },
+        // Bottom
+        { .position = Vector3f{ -1, -1, -1 }, .color = Vector3f{ 1, 0, 1 } },
+        { .position = Vector3f{ 1, -1, -1 }, .color = Vector3f{ 1, 0, 1 } },
+        { .position = Vector3f{ 1, -1, 1 }, .color = Vector3f{ 1, 0, 1 } },
+        { .position = Vector3f{ -1, -1, 1 }, .color = Vector3f{ 1, 0, 1 } }
     };
 
-    const unsigned int indices[] = { 0, 1, 2 };
+    const unsigned int indices[] = {
+        // Front
+        0, 1, 2, 2, 3, 0,
+        // Right
+        4, 5, 6, 6, 7, 4,
+        // Back
+        8, 9, 10, 10, 11, 8,
+        // Left
+        12, 13, 14, 14, 15, 12,
+        // Top
+        16, 17, 18, 18, 19, 16,
+        // Bottom
+        20, 21, 22, 22, 23, 20
+    };
 
     const Mesh mesh{ vertices, indices };
 
