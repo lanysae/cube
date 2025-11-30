@@ -147,3 +147,8 @@ bool Shader::loadFromMemory(const std::string& vsSource, const std::string& fsSo
 
     return program != 0;
 }
+
+void Shader::bind() const
+{
+    glUseProgram(program);
+}

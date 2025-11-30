@@ -13,6 +13,8 @@ public:
     bool loadFromFile(const std::string& vsFilename, const std::string& fsFilename);
     bool loadFromMemory(const std::string& vsSource, const std::string& fsSource);
 
+    void bind() const;
+
 private:
     GLuint program;
 };
