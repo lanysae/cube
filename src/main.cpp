@@ -2,7 +2,10 @@
 #include <cstdlib>
 #include <ratio>
 #include <thread>
+#define GLFW_INCLUDE_NONE
+#include <GLFW/glfw3.h>
 #include <imgui.h>
+#include "math/matrix.hpp"
 #include "math/vector.hpp"
 #include "mesh.hpp"
 #include "shader.hpp"
@@ -22,9 +25,9 @@ int main()
         return EXIT_FAILURE;
 
     const Mesh::Vertex vertices[] = {
-        { .position = Vector3f{ -0.5f, -0.5f, 0.f }, .color = Vector3f{ 1.f, 0.f, 0.f } },
-        { .position = Vector3f{ 0.5f, -0.5f, 0.f }, .color = Vector3f{ 0.f, 1.f, 0.f } },
-        { .position = Vector3f{ 0.f, 0.5f, 0.f }, .color = Vector3f{ 0.f, 0.f, 1.f } }
+        { .position = Vector3f{ -0.5f, -0.25f, 0 }, .color = Vector3f{ 1, 0, 0 } },
+        { .position = Vector3f{ 0.5f, -0.25f, 0 }, .color = Vector3f{ 0, 1, 0 } },
+        { .position = Vector3f{ 0.0f, 0.5f, 0 }, .color = Vector3f{ 0, 0, 1 } }
     };
 
     const unsigned int indices[] = { 0, 1, 2 };
@@ -37,6 +40,8 @@ int main()
         window.beginFrame();
 
         ImGui::ShowDemoWindow();
+
+        shader.setUniform("model", Matrix4f::rotateZ(glfwGetTime() * 0.5f));
 
         shader.bind();
         mesh.draw();

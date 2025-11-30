@@ -7,6 +7,7 @@
 #include <spdlog/spdlog.h>
 #define STB_INCLUDE_IMPLEMENTATION
 #include <stb_include.h>
+#include "math/matrix.hpp"
 #include "utils/assertion.hpp"
 
 static char* stb_include_file_const(const char* filename, const char* inject, const char* path_to_includes, char error[256])
@@ -151,4 +152,20 @@ bool Shader::loadFromMemory(const std::string& vsSource, const std::string& fsSo
 void Shader::bind() const
 {
     glUseProgram(program);
+}
+
+void Shader::setUniform(const std::string& name, const Matrix4f& m)
+{
+    glProgramUniformMatrix4fv(program, getUniformLocation(name), 1, GL_FALSE, m.data());
+}
+
+GLint Shader::getUniformLocation(const std::string& name) const
+{
+    Assert(program != 0);
+
+    const GLint location = glGetUniformLocation(program, name.c_str());
+    if (location == -1)
+        spdlog::warn("'{}' does not correspond to an active uniform variable", name);
+
+    return location;
 }

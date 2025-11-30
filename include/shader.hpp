@@ -3,6 +3,7 @@
 
 #include <string>
 #include <glad/gl.h>
+#include "math/matrix.hpp"
 #include "utils/noncopyable.hpp"
 
 class Shader : private NonCopyable {
@@ -15,8 +16,12 @@ public:
 
     void bind() const;
 
+    void setUniform(const std::string& name, const Matrix4f& m);
+
 private:
     GLuint program;
+
+    GLint getUniformLocation(const std::string& name) const;
 };
 
 #endif

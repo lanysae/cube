@@ -77,11 +77,13 @@ set(CUBE_HEADERS_PATH include)
 
 set(CUBE_SOURCES
     ${CUBE_SOURCES_PATH}/main.cpp
+    ${CUBE_SOURCES_PATH}/math/matrix.cpp
     ${CUBE_SOURCES_PATH}/mesh.cpp
     ${CUBE_SOURCES_PATH}/shader.cpp
     ${CUBE_SOURCES_PATH}/window.cpp)
 set(CUBE_HEADERS
     ${CUBE_HEADERS_PATH}/math/vector.hpp
+    ${CUBE_HEADERS_PATH}/math/matrix.hpp
     ${CUBE_HEADERS_PATH}/mesh.hpp
     ${CUBE_HEADERS_PATH}/shader.hpp
     ${CUBE_HEADERS_PATH}/utils/assertion.hpp
