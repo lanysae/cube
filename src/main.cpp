@@ -104,7 +104,8 @@ int main()
         window.beginFrame();
 
         const Vector2i size = window.getSize();
-        render(size, shader, mesh);
+        if (size.x != 0 && size.y != 0)
+            render(size, shader, mesh);
 
         window.endFrame();
 
