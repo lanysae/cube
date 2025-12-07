@@ -36,7 +36,7 @@ public:
     const float* data() const { return values.data(); }
 
     static Matrix4f translate(const Vector3f& v);
-    static Matrix4f scale(const Vector3f& v);
+    static Matrix4f scale(const Vector3f& s);
     static Matrix4f scale(float s);
     static Matrix4f rotateX(float angle);
     static Matrix4f rotateY(float angle);
