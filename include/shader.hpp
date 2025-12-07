@@ -1,6 +1,7 @@
 #ifndef SHADER_HPP
 #define SHADER_HPP
 
+#include <filesystem>
 #include <string>
 #include <glad/gl.h>
 #include "math/matrix.hpp"
@@ -17,7 +18,7 @@ public:
 
     void setUniform(const std::string& name, const Matrix4f& m);
 
-    static Shader loadFromFile(const std::string& vsFilename, const std::string& fsFilename);
+    static Shader loadFromFile(const std::filesystem::path& vsFilename, const std::filesystem::path& fsFilename);
     static Shader loadFromMemory(const std::string& vsSource, const std::string& fsSource);
 
 private:

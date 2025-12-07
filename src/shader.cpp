@@ -15,12 +15,12 @@ static char* stb_include_file_const(const char* filename, const char* inject, co
     return stb_include_file(const_cast<char*>(filename), const_cast<char*>(inject), const_cast<char*>(path_to_includes), error);
 }
 
-static std::optional<std::string> readFile(const std::string& filename)
+static std::optional<std::string> readFile(const std::filesystem::path& filename)
 {
-    const std::string parentPath = std::filesystem::path{ filename }.parent_path().string();
+    const std::string parentPath = filename.parent_path().string();
 
     char error[256];
-    char* result = stb_include_file_const(filename.c_str(), nullptr, parentPath.c_str(), error);
+    char* result = stb_include_file_const(filename.string().c_str(), nullptr, parentPath.c_str(), error);
     if (!result) {
         spdlog::error("stb_include: {}", error);
         return std::nullopt;
@@ -138,7 +138,7 @@ void Shader::setUniform(const std::string& name, const Matrix4f& m)
     glProgramUniformMatrix4fv(program, getUniformLocation(name), 1, GL_FALSE, m.data());
 }
 
-Shader Shader::loadFromFile(const std::string& vsFilename, const std::string& fsFilename)
+Shader Shader::loadFromFile(const std::filesystem::path& vsFilename, const std::filesystem::path& fsFilename)
 {
     const std::optional<std::string> vsSource = readFile(vsFilename);
     const std::optional<std::string> fsSource = readFile(fsFilename);
