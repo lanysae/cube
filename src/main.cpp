@@ -43,9 +43,8 @@ int main()
     if (!window)
         return EXIT_FAILURE;
 
-    Shader shader;
-    const bool loaded = shader.loadFromFile("shaders/main.vs.glsl", "shaders/main.fs.glsl");
-    if (!loaded)
+    Shader shader = Shader::loadFromFile("shaders/main.vs.glsl", "shaders/main.fs.glsl");
+    if (!shader)
         return EXIT_FAILURE;
 
     const Mesh::Vertex vertices[] = {

@@ -128,27 +128,6 @@ Shader::~Shader()
     glDeleteProgram(program);
 }
 
-bool Shader::loadFromFile(const std::string& vsFilename, const std::string& fsFilename)
-{
-    Assert(program == 0);
-
-    const std::optional<std::string> vsSource = readFile(vsFilename);
-    const std::optional<std::string> fsSource = readFile(fsFilename);
-    if (!vsSource || !fsSource)
-        return false;
-
-    return loadFromMemory(*vsSource, *fsSource);
-}
-
-bool Shader::loadFromMemory(const std::string& vsSource, const std::string& fsSource)
-{
-    Assert(program == 0);
-
-    program = compile(vsSource.c_str(), fsSource.c_str());
-
-    return program != 0;
-}
-
 void Shader::bind() const
 {
     glUseProgram(program);
@@ -157,6 +136,28 @@ void Shader::bind() const
 void Shader::setUniform(const std::string& name, const Matrix4f& m)
 {
     glProgramUniformMatrix4fv(program, getUniformLocation(name), 1, GL_FALSE, m.data());
+}
+
+Shader Shader::loadFromFile(const std::string& vsFilename, const std::string& fsFilename)
+{
+    const std::optional<std::string> vsSource = readFile(vsFilename);
+    const std::optional<std::string> fsSource = readFile(fsFilename);
+    if (!vsSource || !fsSource)
+        return Shader{};
+
+    return loadFromMemory(*vsSource, *fsSource);
+}
+
+Shader Shader::loadFromMemory(const std::string& vsSource, const std::string& fsSource)
+{
+    const GLuint program = compile(vsSource.c_str(), fsSource.c_str());
+
+    return Shader{ program };
+}
+
+Shader::Shader(GLuint program)
+    : program{ program }
+{
 }
 
 GLint Shader::getUniformLocation(const std::string& name) const
