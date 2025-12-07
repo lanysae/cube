@@ -1,6 +1,7 @@
 #include "math/matrix.hpp"
 #include <cmath>
 #include "math/vector.hpp"
+#include "utils/assertion.hpp"
 
 Matrix4f Matrix4f::translate(const Vector3f& v)
 {
@@ -14,6 +15,8 @@ Matrix4f Matrix4f::translate(const Vector3f& v)
 
 Matrix4f Matrix4f::scale(const Vector3f& s)
 {
+    Assert(s.x != 0 && s.y != 0 && s.z != 0);
+
     return Matrix4f{
         s.x, 0, 0, 0,
         0, s.y, 0, 0,
@@ -24,6 +27,8 @@ Matrix4f Matrix4f::scale(const Vector3f& s)
 
 Matrix4f Matrix4f::scale(float s)
 {
+    Assert(s != 0);
+
     return Matrix4f{
         s, 0, 0, 0,
         0, s, 0, 0,
@@ -73,6 +78,8 @@ Matrix4f Matrix4f::rotateZ(float angle)
 
 Matrix4f Matrix4f::rotate(const Vector3f& axis, float angle)
 {
+    Assert((axis != Vector3f{ 0, 0, 0 }));
+
     const Vector3f v = normalize(axis);
     const float c = std::cos(angle);
     const float s = std::sin(angle);
@@ -88,6 +95,8 @@ Matrix4f Matrix4f::rotate(const Vector3f& axis, float angle)
 
 Matrix4f Matrix4f::frustum(float left, float right, float bottom, float top, float zNear, float zFar)
 {
+    Assert(left < right && bottom < top && 0 < zNear && zNear < zFar);
+
     return Matrix4f{
         2 * zNear / (right - left), 0, 0, 0,
         0, 2 * zNear / (top - bottom), 0, 0,
@@ -98,6 +107,8 @@ Matrix4f Matrix4f::frustum(float left, float right, float bottom, float top, flo
 
 Matrix4f Matrix4f::perspective(float fovY, float aspect, float zNear, float zFar)
 {
+    Assert(fovY > 0 && aspect > 0 && 0 < zNear && zNear < zFar);
+
     const float top = zNear * std::tan(0.5f * fovY);
     const float right = aspect * top;
 

@@ -94,11 +94,15 @@ Window::~Window()
 
 bool Window::shouldClose() const
 {
+    Assert(window);
+
     return glfwWindowShouldClose(window);
 }
 
 Vector2i Window::getSize() const
 {
+    Assert(window);
+
     int width, height;
     glfwGetFramebufferSize(window, &width, &height);
 
@@ -107,6 +111,8 @@ Vector2i Window::getSize() const
 
 void Window::beginFrame()
 {
+    Assert(window);
+
     glfwPollEvents();
 
     ImGui_ImplOpenGL3_NewFrame();
@@ -121,6 +127,8 @@ void Window::beginFrame()
 
 void Window::endFrame()
 {
+    Assert(window);
+
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 

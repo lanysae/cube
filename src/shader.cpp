@@ -130,11 +130,15 @@ Shader::~Shader()
 
 void Shader::bind() const
 {
+    Assert(program != 0);
+
     glUseProgram(program);
 }
 
 void Shader::setUniform(const std::string& name, const Matrix4f& m)
 {
+    Assert(program != 0);
+
     glProgramUniformMatrix4fv(program, getUniformLocation(name), 1, GL_FALSE, m.data());
 }
 

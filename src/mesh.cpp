@@ -3,9 +3,12 @@
 #include <span>
 #include <glad/gl.h>
 #include "math/vector.hpp"
+#include "utils/assertion.hpp"
 
 Mesh::Mesh(std::span<const Vertex> vertices, std::span<const unsigned int> indices)
 {
+    Assert(vertices.size() > 0 && indices.size() > 0);
+
     glCreateVertexArrays(1, &vertexArray);
 
     glCreateBuffers(1, &vertexBuffer);
